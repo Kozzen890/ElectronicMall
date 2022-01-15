@@ -27,7 +27,7 @@ if(@$_POST){
 </head>
 <body>
     <div class="container">
-        <h1>Tambah Tamu</h1>
+        <h1 style=" margin-top: 20px;" >Tambah Tamu</h1>
         <hr>
 
         <div class="card">
@@ -43,6 +43,7 @@ if(@$_POST){
                     <textarea name="pesan" class="form-control" cols="30" rows="10"></textarea>
                     <br>
                     <button type="submit" class="btn btn-success btn-block">Simpan</button>
+                    <br>
                 </form>
             </div>
         </div>
