@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce VUE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="bg-white" id="app">
+        <header class="relative bg-white">
+            <nav aria-label="Top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="border-b border-gray-200">
+                    <div class="h-16 flex items-center">
+
+                        <!-- Logo -->
+                        <div class="ml-4 flex lg:ml-0">
+                            <a href="#">
+                                <span class="sr-only">Workflow</span>
+                                <img class="h-8 w-auto"
+                                    src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                                    alt="">
+                            </a>
+                        </div>
+
+                        <!-- Flyout menus -->
+                        <div class="hidden lg:ml-8 lg:block lg:self-stretch">
+                            <div class="h-full flex space-x-8">
+                                <a @click="togglePage('mainPage')"
+                                    class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                    style="cursor:pointer">Beranda</a>
+
+                                <a href="bukutamu.html"
+                                    class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                    style="cursor:pointer">Buku Tamu</a>
+                            </div>
+                        </div>
+
+                        <div class="ml-auto flex items-center">
+                            <!-- Cart -->
+                            <div class="ml-4 flow-root lg:ml-6" @click="togglePage('cartPage')">
+                                <a href="#" class="group -m-2 p-2 flex items-center">
+                                    <!-- Heroicon name: outline/shopping-bag -->
+                                    <svg class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                    </svg>
+                                    <span
+                                        class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{{ cart.length }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div v-if="page.mainPage">
+            <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+
+                    <div class="group relative" v-for="product in products">
+                        <div
+                            class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                            <img :src="product.image"
+                                class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <div>
+                                <h3 class="text-sm text-gray-700">
+                                    <a @click="openDetail(product)">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        {{ product.name }}
+                                    </a>
+                                </h3>
+                                <p class="mt-1 text-sm text-gray-500">{{ product.variant }}</p>
+                            </div>
+                            <p class="text-sm font-medium text-gray-900">{{ product.price }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div v-if="page.productPage">
+            <div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8">
+                <center>
+                    <img :src="productActive.image">
+                </center>
+            </div>
+            <div
+                class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+                <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                    <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+                        {{ productActive.name }}
+                    </h1>
+                </div>
+                <div class="mt-4 lg:mt-0 lg:row-span-3">
+                    <p class="text-3xl text-gray-900">{{ productActive.price }}</p>
+                    <button v-if="atcActive" type="button" @click="addToCart(productActive)"
+                        class="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add
+                        to Cart</button>
+                    <button v-else type="button"
+                        class="mt-10 w-full bg-red-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+                        disabled>Already in Cart</button>
+                </div>
+                <div class="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                    <div>
+                        <div class="space-y-6">
+                            <p class="text-base text-gray-900">{{ productActive.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="page.cartPage">
+            <div
+                class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+                <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                    <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+                        Cart
+                    </h1>
+                </div>
+                <div class="mt-4 lg:mt-0 lg:row-span-3">
+                    <p class="text-3xl text-gray-900">{{ this.convertToRupiah(totalPrice) }}</p>
+                    <button type="button"
+                        class="mt-10 w-full bg-green-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                        disabled>Bayar Sekarang</button>
+                </div>
+                <div class="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                    <div class="mt-8">
+                        <div class="flow-root">
+                            <ul role="list" class="-my-6 divide-y divide-gray-200">
+                                <li class="py-6 flex" v-for="c in cart">
+                                    <hr>
+                                    <div
+                                        class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+                                        <img :src="c.image" alt="" class="w-full h-full object-center object-cover">
+                                    </div>
+                                    <div class="ml-4 flex-1 flex flex-col">
+                                        <div>
+                                            <div class="flex justify-between text-base font-medium text-gray-900">
+                                                <h3>
+                                                    <a @click="openDetail(c)" style="cursor: pointer">
+                                                        {{ c.name }}
+                                                    </a>
+                                                </h3>
+                                                <p class="ml-4">
+                                                    {{ c.price }}
+                                                </p>
+                                            </div>
+                                            <p class="mt-1 text-sm text-gray-500">
+                                                {{ c.variant }}
+                                            </p>
+                                        </div>
+                                        <div class="flex-1 flex items-end justify-between text-sm">
+                                            <p class="text-gray-500">
+                                                Qty 1
+                                            </p>
+
+                                            <div class="flex">
+                                                <button type="button"
+                                                    class="font-medium text-indigo-600 hover:text-indigo-500" @click="removeFromCart(c)">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
+
+
+    <script>
+        new Vue({
+        el: '#app',
+        data: {
+            page: {
+                mainPage: true,
+                productPage: false,
+                cartPage: false
+            },
+            cart: [],
+            totalPrice: 0,
+            products: [],
+            productActive: {},
+            atcActive: true,
+        },
+        mounted() {
+            this.$toastr.defaultPosition = "toast-bottom-right";
+            this.loadProduct()
+            this.initCart()
+        },
+        methods: {
+            initCart(){
+                this.cart = JSON.parse(localStorage.getItem("cart")) ?? []
+                this.totalPrice = JSON.parse(localStorage.getItem("total_price")) ?? 0
+            },
+            async loadProduct() {
+                let products = await axios.get("./data/product.json")
+                this.products = products.data
+
+                console.log(this.products);
+
+                for(let i = 0;i < this.products.length;i++){
+                    this.products[i].raw_price = this.products[i].price
+                    this.products[i].price = this.convertToRupiah(this.products[i].price)
+                }
+            },
+            addToCart(product){
+                this.cart.push(product)
+                this.totalPrice += product.raw_price
+                localStorage.setItem("cart", JSON.stringify(this.cart));
+                localStorage.setItem("total_price", JSON.stringify(this.totalPrice));
+
+                if(this.checkProduct(product)){
+                    this.atcActive = false
+                }else{
+                    this.atcActive = true
+                }
+
+                this.$toastr.s("Berhasil menambahkan barang ke keranjang");
+            },
+            convertToRupiah(angka){
+                var rupiah = '';		
+                var angkarev = angka.toString().split('').reverse().join('');
+                for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+                return 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
+            },
+            openDetail(product){
+                this.productActive = product
+                this.togglePage("productPage")
+
+                if(this.checkProduct(product)){
+                    this.atcActive = false
+                }else{
+                    this.atcActive = true
+                }
+            },
+            checkProduct(product){
+                let cart = this.cart
+                for(let i = 0;i < cart.length;i++){
+                    if(cart[i].id == product.id){
+                        return true
+                    }
+                }
+                return false
+            },
+            removeFromCart(product){
+                let cart = this.cart
+                for(let i = 0;i < cart.length;i++){
+                    if(cart[i].id == product.id){
+                        this.cart.splice(i, 1)
+                    }
+                }
+
+                this.totalPrice -= product.raw_price
+                localStorage.setItem("cart", JSON.stringify(this.cart));
+                localStorage.setItem("total_price", JSON.stringify(this.totalPrice));
+
+                if(this.checkProduct(this)){
+                    this.atcActive = false
+                }else{
+                    this.atcActive = true
+                }
+
+                this.$toastr.s("Berhasil menghapus barang di keranjang");
+            },
+            togglePage(page){
+                if(page == "mainPage"){
+                    this.page.mainPage = true
+                    this.page.productPage = false
+                    this.page.cartPage = false
+                }
+
+                if(page == "productPage"){
+                    this.page.mainPage = false
+                    this.page.productPage = true
+                    this.page.cartPage = false
+                }
+
+                if(page == "cartPage"){
+                    this.page.mainPage = false
+                    this.page.productPage = false
+                    this.page.cartPage = true
+                }
+            }
+        },
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "image": "./image/macbookairm1.jpeg",
+        "name": "Macbook Air M1",
+        "price": 15000000,
+        "variant": "8GB RAM & SSD 256GB",
+        "description": "Macbook Air dengan processor Apple M1 Chip berbasis ARM dengan dukungan memory unified sebesar 8GB",
+        "stock": 10
+    },
+    {
+        "id": 2,
+        "image": "./image/macminim1.jpeg",
+        "name": "Mac Mini M1",
+        "price": 11500000,
+        "variant": "8GB RAM & SSD 256GB",
+        "description": "Mac Mini dengan processor Apple M1 Chip berbasis ARM dengan dukungan memory unified sebesar 8GB",
+        "stock": 10
+    },
+    {
+        "id": 3,
+        "image": "./image/atemmini.jpeg",
+        "name": "Blackmagic Atem Mini",
+        "price": 4850000,
+        "variant": "4 Video Input",
+        "description": "ATEM Mini yang ringkas dari Blackmagic Design menyediakan konsol game, corporate computer streams, atau kamera HD, sebuah pengubah produksi langsung empat input dengan panel kontrol terintegrasi. Keempat input HDMI tersedia di bagian belakang sasis dan mereka memasukkan video hingga 1080p60. Ada juga output HDMI untuk proyektor atau monitor eksternal, output USB Type-C untuk streaming video hingga 1080p60 ke komputer, dan port Ethernet RJ45 10/100 untuk manajemen sistem, remote control, dan peningkatan.",
+        "stock": 10
+    }
+]
