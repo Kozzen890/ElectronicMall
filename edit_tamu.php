@@ -10,7 +10,7 @@ if(@$_POST){
     $pesan = $_POST['pesan'];
 
     $query = mysqli_query($koneksi, "UPDATE tamu SET nama='$nama', email='$email', pesan='$pesan' WHERE id='$id'");
-
+    header("LOCATION: bukutamu.php");
 }
 
 $query = mysqli_query($koneksi, "SELECT * FROM tamu WHERE id='$id'");

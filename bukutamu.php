@@ -76,7 +76,7 @@ $query = mysqli_query($koneksi, "SELECT * FROM tamu");
         </nav>
     </header>
     <div class="container">
-        <h1 style=" margin-top: 20px;" >Buku Tamu</h1>
+        <strong><h1 style="font-size: 32px; margin-top: 24px;" >Buku Tamu</h1></strong>
         <br>
         <a href="tambah_tamu.php" class="btn btn-success">Tambah Tamu</a>
         <br>
