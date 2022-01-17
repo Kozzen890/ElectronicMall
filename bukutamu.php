@@ -41,7 +41,7 @@ $query = mysqli_query($koneksi, "SELECT * FROM tamu");
                                 class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                                 style="cursor:pointer">Beranda</a>
 
-                            <a
+                            <a href="product.html"
                                 class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                                 style="cursor:pointer">Product</a>
 
